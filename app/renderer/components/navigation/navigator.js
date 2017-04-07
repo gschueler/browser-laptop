@@ -102,13 +102,17 @@ class Navigator extends ImmutableComponent {
       .map((extension) => extensionState.getBrowserActionByTabId(this.props.appState, extension.get('id'), activeTabId))
       .filter((browserAction) => browserAction)
 
-    let buttons = extensionBrowserActions.map((browserAction, id) =>
-      <BrowserAction
-        browserAction={browserAction}
+    let buttons = extensionBrowserActions.map((browserAction, id) => {
+      let tabAction = browserAction.getIn(['tabs', activeTabId.toString()])
+      if (tabAction) {
+        tabAction = tabAction.set('base_path', browserAction.get('base_path'))
+      }
+      return <BrowserAction
+        browserAction={tabAction || browserAction}
         extensionId={id}
         tabId={activeTabId}
         popupWindowSrc={this.props.windowState.getIn(['popupWindowDetail', 'src'])} />
-    ).values()
+    }).values()
     buttons = Array.from(buttons)
     if (buttons.length > 0) {
       buttons.push(<span className='buttonSeparator' />)
