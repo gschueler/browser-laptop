@@ -16,6 +16,8 @@ const {StyleSheet, css} = require('aphrodite')
 const commonStyles = require('../styles/commonStyles')
 const globalStyles = require('../styles/global')
 
+const ScrollableContent = require('./scrollableContent')
+
 class MessageBox extends ImmutableComponent {
   constructor () {
     super()
@@ -116,7 +118,9 @@ class MessageBox extends ImmutableComponent {
           {this.title}
         </div>
         <div className={css(styles.body)} data-test-id='msgBoxMessage'>
-          {this.message}
+          <ScrollableContent>
+            {this.message}
+          </ScrollableContent>
         </div>
         {
           this.showSuppress
@@ -154,7 +158,10 @@ const styles = StyleSheet.create({
     marginTop: globalStyles.spacing.dialogInsideMargin,
     minWidth: '425px',
     marginBottom: globalStyles.spacing.dialogInsideMargin,
-    userSelect: 'text'
+    userSelect: 'text',
+    maxHeight: '300px',
+    overflowY: 'auto',
+    overflowX: 'hidden'
   },
   buttons: {
     display: 'flex',

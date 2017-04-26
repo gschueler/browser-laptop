@@ -142,7 +142,8 @@ const globalStyles = {
     paymentsMargin: '20px',
     modalPanelHeaderMarginBottom: '.5em',
     paddingHorizontal: '30px',
-    privateTabPadding: '40px'
+    privateTabPadding: '40px',
+    scrollBarSize: '10px'
   },
   shadow: {
     switchShadow: 'inset 0 1px 4px rgba(0, 0, 0, 0.35)',
@@ -154,7 +155,8 @@ const globalStyles = {
     lightBoxShadow: '0 2px 2px lightGray',
     insetShadow: 'inset -5px 0 15px rgba(0, 0, 0, 0.25)',
     orangeButtonShadow: '0 2px 0 braveDarkOrange',
-    bookmarkHangerArrowUpShadow: '-2px 2px 3px 0px rgba(0, 0, 0, 0.1)'
+    bookmarkHangerArrowUpShadow: '-2px 2px 3px 0px rgba(0, 0, 0, 0.1)',
+    braveComponentsShadow: '0px 1px 5px -1px rgba(0, 0, 0, 0.5)'
   },
   transition: {
     transitionDuration: '100ms',
