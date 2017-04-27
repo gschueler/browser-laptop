@@ -170,6 +170,7 @@ class SiteInfo extends ImmutableComponent {
               onClick={this.props.onHide}
             />
           </div>
+          {viewCertificateButton}
         </div>
     } else if (this.runInsecureContent) {
       connectionInfo =
@@ -187,6 +188,7 @@ class SiteInfo extends ImmutableComponent {
               onClick={this.onDenyRunInsecureContent}
             />
           </div>
+          {viewCertificateButton}
         </div>
     } else if (this.isSecure === true) {
       connectionInfo =
