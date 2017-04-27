@@ -16,6 +16,7 @@ const SortableTable = require('../components/sortableTable')
 const siteUtil = require('../state/siteUtil')
 const formatUtil = require('../../app/common/lib/formatUtil')
 const iconSize = require('../../app/common/lib/faviconUtil').iconSize
+const ScrollableContent = require('../../app/renderer/components/common/scrollableContent')
 
 const ipc = window.chrome.ipcRenderer
 
@@ -136,55 +137,57 @@ class BookmarkFolderItem extends React.Component {
 class BookmarkFolderList extends ImmutableComponent {
   render () {
     return <list className='bookmarkFolderList'>
-      {
-        this.props.isRoot && this.props.search
-        ? <div role='listitem' className='listItem selected'>
-          <span className='bookmarkFolderIcon fa fa-search' />
-          <span data-l10n-id='allFolders' />
-        </div>
-        : null
-      }
-      {
-        this.props.isRoot
-        ? <BookmarkFolderItem
-          onClearSelection={this.props.onClearSelection}
-          search={this.props.search}
-          selected={!this.props.search && this.props.selectedFolderId === 0}
-          dataL10nId='bookmarksToolbar'
-          draggable={false}
-          onChangeSelectedFolder={this.props.onChangeSelectedFolder}
-          allBookmarkFolders={this.props.allBookmarkFolders}
-          selectedFolderId={this.props.selectedFolderId}
-          bookmarkFolder={Immutable.fromJS({folderId: 0, tags: [siteTags.BOOKMARK_FOLDER]})} />
-        : null
-      }
-      {
-        this.props.bookmarkFolders.map((bookmarkFolder) =>
-          this.props.isRoot && bookmarkFolder.get('parentFolderId') === -1
-          ? null
-          : <BookmarkFolderItem
+      <ScrollableContent>
+        {
+          this.props.isRoot && this.props.search
+          ? <div role='listitem' className='listItem selected'>
+            <span className='bookmarkFolderIcon fa fa-search' />
+            <span data-l10n-id='allFolders' />
+          </div>
+          : null
+        }
+        {
+          this.props.isRoot
+          ? <BookmarkFolderItem
             onClearSelection={this.props.onClearSelection}
-            bookmarkFolder={bookmarkFolder}
-            allBookmarkFolders={this.props.allBookmarkFolders}
             search={this.props.search}
-            selected={!this.props.search && this.props.selectedFolderId === bookmarkFolder.get('folderId')}
+            selected={!this.props.search && this.props.selectedFolderId === 0}
+            dataL10nId='bookmarksToolbar'
+            draggable={false}
+            onChangeSelectedFolder={this.props.onChangeSelectedFolder}
+            allBookmarkFolders={this.props.allBookmarkFolders}
             selectedFolderId={this.props.selectedFolderId}
-            onChangeSelectedFolder={this.props.onChangeSelectedFolder} />)
-      }
-      {
-        this.props.isRoot
-        ? <BookmarkFolderItem
-          onClearSelection={this.props.onClearSelection}
-          search={this.props.search}
-          selected={!this.props.search && this.props.selectedFolderId === -1}
-          dataL10nId='otherBookmarks'
-          draggable={false}
-          onChangeSelectedFolder={this.props.onChangeSelectedFolder}
-          allBookmarkFolders={this.props.allBookmarkFolders}
-          selectedFolderId={this.props.selectedFolderId}
-          bookmarkFolder={Immutable.fromJS({folderId: -1, tags: [siteTags.BOOKMARK_FOLDER]})} />
-        : null
-      }
+            bookmarkFolder={Immutable.fromJS({folderId: 0, tags: [siteTags.BOOKMARK_FOLDER]})} />
+          : null
+        }
+        {
+          this.props.bookmarkFolders.map((bookmarkFolder) =>
+            this.props.isRoot && bookmarkFolder.get('parentFolderId') === -1
+            ? null
+            : <BookmarkFolderItem
+              onClearSelection={this.props.onClearSelection}
+              bookmarkFolder={bookmarkFolder}
+              allBookmarkFolders={this.props.allBookmarkFolders}
+              search={this.props.search}
+              selected={!this.props.search && this.props.selectedFolderId === bookmarkFolder.get('folderId')}
+              selectedFolderId={this.props.selectedFolderId}
+              onChangeSelectedFolder={this.props.onChangeSelectedFolder} />)
+        }
+        {
+          this.props.isRoot
+          ? <BookmarkFolderItem
+            onClearSelection={this.props.onClearSelection}
+            search={this.props.search}
+            selected={!this.props.search && this.props.selectedFolderId === -1}
+            dataL10nId='otherBookmarks'
+            draggable={false}
+            onChangeSelectedFolder={this.props.onChangeSelectedFolder}
+            allBookmarkFolders={this.props.allBookmarkFolders}
+            selectedFolderId={this.props.selectedFolderId}
+            bookmarkFolder={Immutable.fromJS({folderId: -1, tags: [siteTags.BOOKMARK_FOLDER]})} />
+          : null
+        }
+      </ScrollableContent>
     </list>
   }
 }
@@ -448,7 +451,7 @@ class AboutBookmarks extends React.Component {
     this.refs.bookmarkSearch.focus()
   }
   render () {
-    return <div className='siteDetailsPage' onClick={this.onClick}>
+    return <div className='siteDetailsPage bookmarksManager' onClick={this.onClick}>
       <div className='siteDetailsPageHeader'>
         <AboutPageSectionTitle data-l10n-id='bookmarkManager' />
         <div className='headerActions'>
